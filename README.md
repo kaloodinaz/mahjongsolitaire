@@ -1,0 +1,2 @@
+# mahjongsolitaire
+mahjong solitaire game
