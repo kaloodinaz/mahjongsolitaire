@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+     <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#151515" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="無料で遊べる麻雀ソリティアゲーム。美しいグラフィックと直感的な操作で、いつでもどこでも麻雀パズルをお楽しみいただけます。">
+    <meta name="keywords" content="麻雀, 無料ゲーム, 麻雀ソリティア, オンラインゲーム, パズルゲーム">
+    <meta property="og:title" content="無料ゲーム麻雀 - 本格麻雀ソリティア">
+    <meta property="og:description" content="無料で遊べる麻雀ソリティアゲーム。登録不要で今すぐプレイ！">
+    <meta property="og:type" content="website">
+    <title>無料ゲーム麻雀 | 本格麻雀ソリティア</title>
+    <link rel="shortcut icon" href="https://kaloodinaz.github.io/mahjongsolitaire/favicon.ico">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' style='stop-color:%23166534'/%3E%3Cstop offset='100%25' style='stop-color:%2315803d'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='15' fill='url(%23g)'/%3E%3Crect x='10' y='10' width='80' height='80' rx='8' fill='%23dcfce7' stroke='%23ef4444' stroke-width='3'/%3E%3Ctext x='50' y='65' font-family='serif' font-size='45' font-weight='bold' fill='%23166534' text-anchor='middle'%3E麻%3C/text%3E%3C/svg%3E">
+    
+    <style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{--dark-green:#166534;--medium-green:#15803d;--light-green:#dcfce7;--accent-red:#ef4444;--bg-dark:#0f1a14;--text-light:#f0fdf4}
+body{font-family:'Hiragino Sans','Yu Gothic','Meiryo',sans-serif;background:linear-gradient(135deg,var(--bg-dark) 0%,#1a2e1f 100%);color:var(--text-light);min-height:100vh;overflow-x:hidden}
+.header{background:linear-gradient(135deg,var(--dark-green) 0%,var(--medium-green) 100%);padding:1.5rem 2rem;box-shadow:0 4px 20px #ef444433;position:relative;overflow:hidden}
+.header::before{content:'';position:absolute;top:-50%;right:-10%;width:300px;height:300px;background:radial-gradient(circle,#ef44441a 0%,transparent 70%);animation:pulse 4s ease-in-out infinite}
+@keyframes pulse {
+0%,100%{transform:scale(1);opacity:.5}
+50%{transform:scale(1.2);opacity:.8}
+}
+.header-content{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1}
+.logo{display:flex;align-items:center;gap:1rem}
+.logo-icon{width:50px;height:50px;background:linear-gradient(135deg,var(--light-green) 0%,#bbf7d0 100%);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;color:var(--dark-green);border:3px solid var(--accent-red);box-shadow:0 4px 15px #0000004d;animation:float 3s ease-in-out infinite}
+@keyframes float {
+0%,100%{transform:translateY(0px)}
+50%{transform:translateY(-5px)}
+}
+.logo h1{font-size:1.8rem;font-weight:700;color:var(--text-light);text-shadow:2px 2px 4px #00000080}
+.ad-banner-desktop{background:linear-gradient(135deg,var(--light-green) 0%,#bbf7d0 100%);width:728px;height:90px;display:flex;align-items:center;justify-content:center;border-radius:8px;border:2px solid var(--accent-red);color:var(--dark-green);font-weight:700;font-size:1.2rem;box-shadow:0 4px 15px #0000004d;margin:2rem auto}
+.container{max-width:1400px;margin:0 auto;padding:2rem}
+.game-section{background:#16653433;border-radius:20px;padding:2rem;margin-bottom:2rem;border:2px solid var(--medium-green);box-shadow:0 8px 32px #ef444426;backdrop-filter:blur(10px)}
+.game-controls{display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;flex-wrap:wrap;gap:1rem}
+.game-title{font-size:1.5rem;color:var(--light-green);display:flex;align-items:center;gap:.5rem}
+.game-title::before{content:'🀄';font-size:2rem;animation:rotate 3s linear infinite}
+@keyframes rotate {
+from{transform:rotate(0deg)}
+to{transform:rotate(360deg)}
+}
+.fullscreen-btn{background:linear-gradient(135deg,var(--accent-red) 0%,#dc2626 100%);color:#fff;border:none;padding:.8rem 1.5rem;border-radius:10px;font-size:1rem;font-weight:700;cursor:pointer;transition:all .3s ease;box-shadow:0 4px 15px #ef444466}
+.fullscreen-btn:hover{transform:translateY(-2px);box-shadow:0 6px 20px #ef444499}
+.fullscreen-btn:active{transform:translateY(0)}
+.game-container{position:relative;width:100%;padding-bottom:75%;background:var(--bg-dark);border-radius:15px;overflow:hidden;border:3px solid var(--medium-green);box-shadow:0 8px 32px #00000080}
+.game-container.fullscreen{position:fixed;top:0;left:0;width:100vw;height:100vh;padding-bottom:0;z-index:9999;border-radius:0}
+.game-container iframe{position:absolute;top:0;left:0;width:100%;height:100%;border:none}
+.content-section{background:#16653426;border-radius:20px;padding:2.5rem;margin-bottom:2rem;border:2px solid #15803d4d;backdrop-filter:blur(5px)}
+.content-section h2{color:var(--light-green);font-size:2rem;margin-bottom:1.5rem;border-bottom:3px solid var(--accent-red);padding-bottom:.5rem;display:inline-block}
+.content-section h3{color:var(--light-green);font-size:1.5rem;margin:2rem 0 1rem}
+.content-section p{line-height:1.8;margin-bottom:1rem;color:#d1fae5;font-size:1.1rem}
+.features-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1.5rem;margin:2rem 0}
+.feature-card{background:linear-gradient(135deg,#1665344d 0%,#15803d33 100%);padding:1.5rem;border-radius:15px;border:2px solid var(--medium-green);transition:all .3s ease}
+.feature-card:hover{transform:translateY(-5px);box-shadow:0 8px 25px #ef44444d;border-color:var(--accent-red)}
+.feature-card h4{color:var(--accent-red);font-size:1.3rem;margin-bottom:.5rem}
+.footer{background:linear-gradient(135deg,var(--dark-green) 0%,var(--medium-green) 100%);padding:2rem;text-align:center;margin-top:3rem;border-top:3px solid var(--accent-red)}
+.footer p{color:var(--light-green);font-size:.9rem}
+@media (max-width: 768px) {
+.ad-banner-desktop{display:none}
+.header{padding:1rem}
+.header-content{flex-direction:column;gap:1rem}
+.logo h1{font-size:1.3rem}
+.logo-icon{width:40px;height:40px;font-size:1.5rem}
+.container{padding:1rem}
+.game-section{padding:1rem}
+.game-title{font-size:1.2rem}
+.content-section{padding:1.5rem}
+.content-section h2{font-size:1.5rem}
+.content-section h3{font-size:1.2rem}
+.content-section p{font-size:1rem}
+.features-grid{grid-template-columns:1fr}
+}
+@media (min-width: 769px) and (max-width: 1024px) {
+.ad-banner-desktop{width:100%;max-width:728px}
+}
+    </style>
+</head>
+<body>
+  <script>
+    if('serviceWorker' in navigator) {window.addEventListener('load', () => {navigator.serviceWorker.register('/sw.js')
+    .then(registration => {console.log('Service Worker registered successfully:', registration);})
+    .catch(error => {console.log('Error in Service Worker registration:', error);});});}
+    </script>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">麻</div>
+                <h1>無料ゲーム麻雀</h1>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <section class="game-section">
+            <div class="game-controls">
+                <h2 class="game-title">今すぐプレイ</h2>
+                <button class="fullscreen-btn" onclick="toggleFullscreen()">🖥️ フルスクリーン</button>
+            </div>
+            <div class="game-container" id="gameContainer">
+                <iframe loading="lazy" src="https://mahjongsolitaire.pages.dev/" allowfullscreen></iframe>
+            </div>
+        </section>
+
+          <div class="ad-banner-desktop">
+       <script type="text/javascript">
+     atOptions = {
+       'key' : 'd1d26e15f7c349fd8e403bb5ea491a31',
+       'format' : 'iframe',
+       'height' : 90,
+       'width' : 728,
+       'params' : {}
+     };
+   </script>
+   <script type="text/javascript" src="//www.highperformanceformat.com/d1d26e15f7c349fd8e403bb5ea491a31/invoke.js"></script>
+    </div>
+
+        <section class="content-section">
+            <h2>🀄 無料ゲーム麻雀について</h2>
+            <p>無料ゲーム麻雀は、伝統的な麻雀牌を使用した人気のパズルゲーム「麻雀ソリティア」をオンラインで楽しめるプラットフォームです。登録不要、ダウンロード不要で、ブラウザ上ですぐにプレイを開始できます。</p>
+            <p>麻雀ソリティアは、同じ絵柄の牌を見つけて消していくシンプルなルールながら、奥深い戦略性を持つゲームです。集中力と観察力を養いながら、リラックスした時間を過ごすことができます。</p>
+
+            <h3>🎮 ゲームの特徴</h3>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <h4>✨ 完全無料</h4>
+                    <p>登録不要で今すぐプレイ - すべての機能を無料でご利用いただけます。課金要素は一切ありません。</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🚀 登録不要</h4>
+                    <p>面倒な会員登録やログインは不要。アクセスするだけで今すぐプレイできます。</p>
+                </div>
+                <div class="feature-card">
+                    <h4>📱 レスポンシブ対応</h4>
+                    <p>スマートフォン、タブレット、PCなど、あらゆるデバイスで快適にプレイできます。</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🎨 美麗グラフィック</h4>
+                    <p>見やすく美しいデザインで、長時間のプレイでも目が疲れにくい設計です。</p>
+                </div>
+                <div class="feature-card">
+                    <h4>⚡ 高速動作</h4>
+                    <p>最適化されたコードにより、ストレスフリーな快適な動作を実現しています。</p>
+                </div>
+                <div class="feature-card">
+                    <h4>🔄 無限リプレイ</h4>
+                    <p>何度でも挑戦可能。毎回異なる配置で新鮮な体験が楽しめます。</p>
+                </div>
+            </div>
+
+            <h3>📖 遊び方</h3>
+            <p>麻雀ソリティアのルールは非常にシンプルです：</p>
+            <p>1. 積み重ねられた麻雀牌の中から、同じ絵柄の牌を2つ選択します。</p>
+            <p>2. 選択できるのは、左右どちらかが空いている牌のみです。上に他の牌が乗っている牌は選択できません。</p>
+            <p>3. すべての牌を消すことができればクリアです。</p>
+            <p>一見簡単そうに見えますが、消す順番を間違えると行き詰まってしまうこともあります。先を読む力と戦略的思考が求められる、奥深いパズルゲームです。</p>
+
+            <h3>💡 攻略のコツ</h3>
+            <p>麻雀ソリティアを上達するためのヒントをいくつかご紹介します：</p>
+            <p><strong>全体を見渡す：</strong> 一番上の牌だけでなく、全体の配置を確認してから手を打ちましょう。</p>
+            <p><strong>同じ牌の位置を把握：</strong> 同じ絵柄の牌が4つあることを意識し、それぞれの位置関係を把握することが重要です。</p>
+            <p><strong>優先順位を考える：</strong> 下層にある牌や、多くの牌を解放できる組み合わせを優先的に消していきましょう。</p>
+            <p><strong>焦らずプレイ：</strong> 時間制限はありません。じっくり考えて最適な手を選びましょう。</p>
+
+            <h3>🎯 こんな方におすすめ</h3>
+            <p>無料ゲーム麻雀は、以下のような方に特におすすめです：</p>
+            <p>• 通勤・通学の空き時間に気軽に遊びたい方</p>
+            <p>• 頭の体操やリフレッシュをしたい方</p>
+            <p>• パズルゲームが好きな方</p>
+            <p>• 麻雀の牌に親しみたい初心者の方</p>
+            <p>• 集中力を高めたい方</p>
+
+            <h3>🌟 無料で今すぐ始めよう</h3>
+            <p>無料ゲーム麻雀で、伝統的な麻雀牌を使った本格パズルゲームをお楽しみください。登録不要でいつでもどこでもプレイできるので、思い立ったときにすぐに遊べます。初心者から上級者まで、誰でも楽しめる麻雀ソリティアの世界へようこそ！</p>
+        </section>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 無料ゲーム麻雀. All rights reserved.</p>
+    </footer>
+
+    <script>
+        function toggleFullscreen() {
+            const container = document.getElementById('gameContainer');
+            
+            if (!document.fullscreenElement) {
+                if (container.requestFullscreen) {
+                    container.requestFullscreen();
+                } else if (container.webkitRequestFullscreen) {
+                    container.webkitRequestFullscreen();
+                } else if (container.msRequestFullscreen) {
+                    container.msRequestFullscreen();
+                }
+                container.classList.add('fullscreen');
+            } else {
+                if (document.exitFullscreen) {
+                    document.exitFullscreen();
+                } else if (document.webkitExitFullscreen) {
+                    document.webkitExitFullscreen();
+                } else if (document.msExitFullscreen) {
+                    document.msExitFullscreen();
+                }
+                container.classList.remove('fullscreen');
+            }
+        }
+
+        document.addEventListener('fullscreenchange', function() {
+            const container = document.getElementById('gameContainer');
+            if (!document.fullscreenElement) {
+                container.classList.remove('fullscreen');
+            }
+        });
+
+        document.addEventListener('webkitfullscreenchange', function() {
+            const container = document.getElementById('gameContainer');
+            if (!document.webkitFullscreenElement) {
+                container.classList.remove('fullscreen');
+            }
+        });
+    </script>
+  <script src="https://cdn.counter.dev/script.js" data-id="74211804-62e3-41a8-9f09-2f1eac9640fb" data-utcoffset="2"></script>
+</body>
+</html>
